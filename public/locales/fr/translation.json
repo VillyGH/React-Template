@@ -1,0 +1,17 @@
+{
+  "about": "À propos",
+  "index_title": "React-Template",
+  "index_subtitle": "Un modèle de démarrage rapide pour les applications React",
+  "footer_text": "2025 React-Template Créé par William Blanchet Lafrenière",
+  "about_title": "À propos de React-Template",
+  "about_texts": [
+    "React-Template est un modèle de démarrage rapide pour les applications React. Il est conçu pour vous aider à démarrer rapidement avec une configuration de base, y compris la gestion des routes, la gestion des états, et le support multilingue.",
+    "Ce modèle utilise les bibliothèques suivantes :",
+    "- React : La bibliothèque principale pour construire l'interface utilisateur.",
+    "- React Router : Pour la gestion des routes dans l'application.",
+    "- React Bootstrap : Pour les composants UI basés sur Bootstrap.",
+    "- TsParticles : Pour les effets de particules dans l'interface utilisateur.",
+    "- Framer Motion : Pour les animations et les transitions.",
+    "- i18next : Pour le support multilingue."
+  ]
+}

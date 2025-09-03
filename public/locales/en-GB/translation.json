@@ -1,0 +1,17 @@
+{
+  "about": "About",
+  "index_title": "React-Template",
+  "index_subtitle": "A quick start template for React applications",
+  "footer_text": "2025 React-Template Created by William Blanchet Lafrenière",
+  "about_title": "About React-Template",
+  "about_texts": [
+    "React-Template is a quick start template for React applications. It is designed to help you get up and running quickly with a basic setup, including routing, state management, and multilingual support.",
+    "This template uses the following libraries:",
+    "- React: The main library for building the user interface.",
+    "- React Router: For managing routes in the application.",
+    "- React Bootstrap: For Bootstrap-based UI components.",
+    "- TsParticles: For particle effects in the user interface.",
+    "- Framer Motion: For animations and transitions.",
+    "- i18next: For multilingual support."
+  ]
+}
