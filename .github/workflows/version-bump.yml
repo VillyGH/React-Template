@@ -1,7 +1,7 @@
 name: Auto bump version and update PR
 
 on:
-  pushes:
+  push:
     branches:
       - main
   pull_request:
