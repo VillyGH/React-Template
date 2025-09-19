@@ -71,23 +71,20 @@ class NavigationBar extends React.Component<Props, State> {
     public render(): ReactElement | null {
         return (
             <Navbar expand="xl" fixed="top">
-                <Container fluid={true}>
+                <Container fluid={true} className="d-flex align-items-center position-relative">
                     <LinkContainer to="/">
                         <Navbar.Brand>
                             <img className="me-3" src={Application.isDarkMode() ? Logo : LogoDark} alt="Logo"
                                  width={80} height={60}/>
                         </Navbar.Brand>
                     </LinkContainer>
+                    <div className="d-none position-absolute start-50 translate-middle-x d-xl-flex">
+                        {this.generalLinks()}
+                    </div>
                     <div>
-                        <Button className="btn-sm-theme me-3 d-lg-none"
-                                onClick={async (): Promise<void> =>
-                                    this.changeLanguage(this.state.language === "fr" ? "en" : "fr")}>
-                            {this.state.language === "fr" ? "EN" : "FR"}
-                        </Button>
-                        <Button className="btn-sm-theme me-3 d-lg-none"
-                                onClick={async (): Promise<void> => await this.changeTheme(!this.state.isDarkMode)}>
-                            <FontAwesomeIcon icon={this.state.isDarkMode ? faSun : faMoon}/>
-                        </Button>
+                        <div className="d-xl-none d-inline">
+                            {this.otherButtons()}
+                        </div>
                         <Navbar.Toggle aria-controls="offcanvasNavbar"
                                        onClick={() => this.handleVisibilityOffCanvas(true)}/>
                     </div>
@@ -97,23 +94,19 @@ class NavigationBar extends React.Component<Props, State> {
                             <Offcanvas.Title id="offcanvasNavbarLabel">
                                 <LinkContainer to="/" onClick={() => this.handleVisibilityOffCanvas(false)}>
                                     <img className="me-3" src={Application.isDarkMode() ? Logo : LogoDark} alt="Logo"
-                                         width={100} height={60}/>
+                                         width={80} height={60}/>
                                 </LinkContainer>
                             </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
-                            {this.generalLinks()}
-                            <div className="mt-3">
-                                <Button className="btn-theme me-3"
-                                        onClick={async (): Promise<void> =>
-                                            this.changeLanguage(this.state.language === "fr" ? "en" : "fr")}>
-                                    {this.state.language === "fr" ? "EN" : "FR"}
-                                </Button>
-                                <Button className="btn-theme"
-                                        onClick={async (): Promise<void> =>
-                                            await this.changeTheme(!this.state.isDarkMode)}>
-                                    <FontAwesomeIcon icon={this.state.isDarkMode ? faSun : faMoon}/>
-                                </Button>
+                            <div className="d-xl-none d-flex flex-column align-items-center w-100 gap-4">
+                                {this.generalLinks()}
+                            </div>
+                            <div
+                                className="ms-xl-auto flex-xl-row d-flex gap-4 gap-xl-3 justify-content-center align-items-center flex-column mt-xl-0 mt-4">
+                                <div className="d-xl-flex d-none">
+                                    {this.otherButtons()}
+                                </div>
                             </div>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
@@ -165,6 +158,30 @@ class NavigationBar extends React.Component<Props, State> {
                 <NavItem link={RoutesPath.ABOUT} label={t("about")}
                          onClick={() => this.handleVisibilityOffCanvas(false)}/>
             </Nav>
+        );
+    }
+
+    /**
+     * This function returns the other buttons used in the navigation bar
+     * @returns {JSX.Element} The navigation links
+     * @category Components
+     * @subcategory Navigation
+     * @hideconstructor
+     * @see generalLinks
+     * @private
+     */
+    private otherButtons(): ReactElement {
+        return (
+            <>
+                <Button className="me-3" onClick={async (): Promise<void> =>
+                    this.changeLanguage(this.state.language === "fr" ? "en" : "fr")}>
+                    {this.state.language === "fr" ? "EN" : "FR"}
+                </Button>
+                <Button className="me-3" onClick={async (): Promise<void> =>
+                    await this.changeTheme(!this.state.isDarkMode)}>
+                    <FontAwesomeIcon icon={this.state.isDarkMode ? faSun : faMoon}/>
+                </Button>
+            </>
         );
     }
 
