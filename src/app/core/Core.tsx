@@ -25,7 +25,7 @@ export const Core: React.FC = (): ReactElement | null => {
 
     return (
         <Suspense fallback={<LoadingScreen/>}>
-            <Router future={{v7_relativeSplatPath: true}} basename={BASE_URL}>
+            <Router basename={BASE_URL}>
                 <NavigationBar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/>
                 <ReactNotifications/>
                 <AnimatePresence mode="wait">
