@@ -1,7 +1,8 @@
-import {Application} from "./app/core/Application";
+import {startApp} from "./app/core/Application";
 
-let app = new Application();
-app.start();
+startApp();
 
 // @ts-ignore
-window.app = app;
+window.app = {
+    start: startApp,
+};

@@ -15,9 +15,10 @@ import RouteNotFound from "../pages/RouteNotFound";
 import {RoutesPath} from "../RoutesPath";
 import {LoadingScreen} from "../components/LoadingScreen";
 import {AnimatePresence} from "framer-motion";
+import {isDarkMode as appIsDarkMode} from "./Application";
 
 export const Core: React.FC = (): ReactElement | null => {
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(appIsDarkMode());
 
     const toggleDarkMode = (value: boolean): void => {
         setIsDarkMode(value);

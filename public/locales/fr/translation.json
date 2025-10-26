@@ -13,5 +13,6 @@
     "- TsParticles : Pour les effets de particules dans l'interface utilisateur.",
     "- Framer Motion : Pour les animations et les transitions.",
     "- i18next : Pour le support multilingue."
-  ]
+  ],
+    "translation_error": "Une erreur s'est produite lors du chargement des traductions."
 }

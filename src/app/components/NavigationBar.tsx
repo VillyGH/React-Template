@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from "react";
+import React, {ReactElement, useEffect, useState, useCallback} from "react";
 import {Button, Container, Offcanvas} from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -9,8 +9,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMoon, faSun} from "@fortawesome/free-solid-svg-icons";
 import {RoutesPath} from "../RoutesPath";
 import {ComponentNavItem as NavItem} from "./ComponentNavItem";
-import {Application} from "../core/Application";
 import {useTranslation} from "react-i18next";
+import {useLocation} from "react-router-dom";
 
 interface Props {
     isDarkMode: boolean;
@@ -21,40 +21,36 @@ const NavigationBar: React.FC<Props> = ({isDarkMode, toggleDarkMode}): ReactElem
     const {t, i18n} = useTranslation();
     const [language, setLanguage] = useState<"fr" | "en">("fr");
     const [showModal, setShowModal] = useState<boolean>(false);
+    const location = useLocation();
 
     useEffect(() => {
-        const init = async () => {
-            const userTheme: string | null = localStorage.getItem("theme");
-            const userLangage: string | null = navigator.language;
-            let dark = false;
+        const init = async (): Promise<void> => {
+            const userTheme = localStorage.getItem("theme");
+            const dark = userTheme ? userTheme === "dark" : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+            changeTheme(dark);
 
-            if (userTheme) {
-                dark = userTheme === "dark";
-            } else {
-                const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-                if (darkModeQuery !== undefined) {
-                    dark = darkModeQuery.matches;
-                }
-            }
-            await changeTheme(dark);
-            if (userLangage === "fr" || userLangage === "en") {
-                await changeLanguage(userLangage);
+            const userLang = navigator.language ? navigator.language.slice(0, 2) : null;
+            if (userLang === "fr" || userLang === "en") {
+                await changeLanguage(userLang);
             }
         };
-        init();
+        init().catch((error) => console.error(t("translation_error"), error));
     }, []);
 
-    const changeLanguage = async (lang: "fr" | "en"): Promise<void> => {
-        setLanguage(lang);
-        await i18n.changeLanguage(lang);
-    };
+    useEffect(() => {
+        setShowModal(false);
+    }, [location]);
 
-    const changeTheme = async (currentMode: boolean): Promise<void> => {
+    const changeLanguage = useCallback(async (lang: "fr" | "en"): Promise<void> => {
+        await i18n.changeLanguage(lang);
+        setLanguage(lang);
+    }, [i18n]);
+
+    const changeTheme = useCallback((currentMode: boolean): void => {
         toggleDarkMode(currentMode);
         document.documentElement.setAttribute("data-bs-theme", currentMode ? "dark" : "light");
         localStorage.setItem("theme", currentMode ? "dark" : "light");
-        toggleDarkMode(currentMode);
-    };
+    }, [toggleDarkMode]);
 
     const generalLinks = (): ReactElement => (
         <Nav className="mx-auto" variant="underline">
@@ -69,7 +65,7 @@ const NavigationBar: React.FC<Props> = ({isDarkMode, toggleDarkMode}): ReactElem
                 {language === "fr" ? "EN" : "FR"}
             </Button>
             <Button className="me-3" onClick={async (): Promise<void> =>
-                await changeTheme(!isDarkMode)}>
+                changeTheme(!isDarkMode)}>
                 <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon}/>
             </Button>
         </>
@@ -80,8 +76,7 @@ const NavigationBar: React.FC<Props> = ({isDarkMode, toggleDarkMode}): ReactElem
             <Container fluid={true} className="d-flex align-items-center position-relative">
                 <LinkContainer to="/">
                     <Navbar.Brand>
-                        <img className="me-3" src={Application.isDarkMode() ? Logo : LogoDark} alt="Logo"
-                             width={80} height={60}/>
+                        <img className="me-3" src={isDarkMode ? Logo : LogoDark} alt="Logo" width={80} height={60}/>
                     </Navbar.Brand>
                 </LinkContainer>
                 <div className="d-none position-absolute start-50 translate-middle-x d-xl-flex">
@@ -91,16 +86,14 @@ const NavigationBar: React.FC<Props> = ({isDarkMode, toggleDarkMode}): ReactElem
                     <div className="d-xl-none d-inline">
                         {otherButtons()}
                     </div>
-                    <Navbar.Toggle aria-controls="offcanvasNavbar"
-                                   onClick={() => setShowModal(true)}/>
+                    <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={() => setShowModal(true)}/>
                 </div>
                 <Navbar.Offcanvas show={showModal} onHide={() => setShowModal(false)}
                                   id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="end">
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title id="offcanvasNavbarLabel">
                             <LinkContainer to="/" onClick={() => setShowModal(false)}>
-                                <img className="me-3" src={Application.isDarkMode() ? Logo : LogoDark} alt="Logo"
-                                     width={80} height={60}/>
+                                <img className="me-3" src={isDarkMode ? Logo : LogoDark} alt="Logo" width={80} height={60}/>
                             </LinkContainer>
                         </Offcanvas.Title>
                     </Offcanvas.Header>

@@ -6,17 +6,20 @@ import {LinkContainer} from "react-router-bootstrap";
 interface ComponentNavItemProps {
     label: string;
     link: string;
-    onClick: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+    onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 }
 
-export const ComponentNavItem: React.FC<ComponentNavItemProps> = (props): ReactElement => {
+const ComponentNavItemInner: React.FC<ComponentNavItemProps> = (props): ReactElement => {
+    const {label, link, onClick} = props;
     return (
-        <LinkContainer to={props.link}>
-            <Nav.Link onClick={props.onClick}>
+        <LinkContainer to={link}>
+            <Nav.Link onClick={onClick}>
                 <div className="navItem">
-                    {props.label}
+                    {label}
                 </div>
             </Nav.Link>
         </LinkContainer>
     );
 };
+
+export const ComponentNavItem = React.memo(ComponentNavItemInner) as React.FC<ComponentNavItemProps>;
