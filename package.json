@@ -5,8 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack serve",
-    "build": "webpack --mode production --progress",
-    "lint": "next lint"
+    "build": "webpack --mode production --progress"
   },
   "dependencies": {
     "@babel/core": "^7.27.1",

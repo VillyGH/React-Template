@@ -92,7 +92,8 @@ export default {
         }),
         new CopyWebpackPlugin({
             patterns: [
-                {from: path.join(__dirname, "public/locales"), to: "locales"}
+                {from: path.join(__dirname, "public/locales"), to: "locales"},
+                {from: path.join(__dirname, "public/locales/en"), to: "locales/en-GB"}
             ]
         }),
     ]

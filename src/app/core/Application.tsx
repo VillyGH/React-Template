@@ -9,36 +9,23 @@ export class Application {
     private rootElem: HTMLElement | null = null;
     private root: ReactDOM.Root | null = null;
 
-    /**
-     * Determine if the user is in dark mode
-     */
     public static readonly isDarkMode = (): boolean => {
         const themeAttribute: string | null = document.documentElement.getAttribute("data-bs-theme");
         return themeAttribute != null ? themeAttribute == "dark" : false;
     }
 
-    /**
-     * Start the application
-     */
     public readonly start = async (): Promise<void> => {
         await this.initParticles();
         this.updateDarkMode();
         this.renderCore();
     }
 
-    /**
-     * Initialize the React particles engine
-     */
     public readonly initParticles = async (): Promise<void> => {
         await initParticlesEngine(async (engine): Promise<void> => {
             await loadFull(engine);
         });
     };
 
-    /**
-     * Update the dark mode style for the loading screen
-     * @private
-     */
     private readonly updateDarkMode = (): void => {
         const themeAttribute: string | null = document.documentElement.getAttribute("data-bs-theme");
         if (themeAttribute == null) {
@@ -50,25 +37,21 @@ export class Application {
         }
     }
 
-    /**
-     * Render the core of the application
-     * @private
-     */
     private readonly renderCore = (): void => {
         this.defineRoot();
 
         if (this.rootElem !== null && this.rootElem) {
             this.root = ReactDOM.createRoot(this.rootElem);
-            this.root.render(<Core />);
+            this.root.render(
+                <React.StrictMode>
+                    <Core />
+                </React.StrictMode>
+            );
         } else {
             console.error("Root element is null or undefined!");
         }
     }
 
-    /**
-     * Define the root element of the application
-     * @private
-     */
     private readonly defineRoot = (): void => {
         if (this.rootElem === null || !this.rootElem) {
             this.rootElem = document.createElement("div");
