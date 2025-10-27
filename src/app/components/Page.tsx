@@ -1,12 +1,12 @@
 import {motion} from "framer-motion";
-import React, {ReactNode, useMemo} from "react";
+import React, {ReactNode} from "react";
 import Particles from "@tsparticles/react";
 import {ParticleOptsMenuDark} from "../types/ParticlesDark";
 import {ParticleOptsMenu} from "../types/Particles";
 import {Container} from "react-bootstrap";
 import {isDarkMode as appIsDarkMode} from "../core/Application";
 
-export const Page = ({title, children}: {title?: string, children: ReactNode}) => {
+export const Page = ({title, children}: { title?: string, children: ReactNode }) => {
     const opacity = {
         initial: {
             opacity: 0,
@@ -50,11 +50,9 @@ export const Page = ({title, children}: {title?: string, children: ReactNode}) =
         variants: variants,
     });
 
-    const particlesOptions = useMemo(() => (appIsDarkMode() ? ParticleOptsMenuDark : ParticleOptsMenu), []);
-
     return (
         <Container>
-            <Particles options={particlesOptions}/>
+            <Particles options={appIsDarkMode() ? ParticleOptsMenuDark : ParticleOptsMenu}/>
             <motion.div {...anim(slide)}/>
             <motion.div {...anim(opacity)}>
                 <h2 className="my-5">{title}</h2>

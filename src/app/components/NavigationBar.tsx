@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState, useCallback} from "react";
+import React, {ReactElement, useCallback, useEffect, useState} from "react";
 import {Button, Container, Offcanvas} from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -93,7 +93,8 @@ const NavigationBar: React.FC<Props> = ({isDarkMode, toggleDarkMode}): ReactElem
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title id="offcanvasNavbarLabel">
                             <LinkContainer to="/" onClick={() => setShowModal(false)}>
-                                <img className="me-3" src={isDarkMode ? Logo : LogoDark} alt="Logo" width={80} height={60}/>
+                                <img className="me-3" src={isDarkMode ? Logo : LogoDark} alt="Logo" width={80}
+                                     height={60}/>
                             </LinkContainer>
                         </Offcanvas.Title>
                     </Offcanvas.Header>

@@ -14,5 +14,5 @@
     "- Framer Motion : Pour les animations et les transitions.",
     "- i18next : Pour le support multilingue."
   ],
-    "translation_error": "Une erreur s'est produite lors du chargement des traductions."
+  "translation_error": "Une erreur s'est produite lors du chargement des traductions."
 }

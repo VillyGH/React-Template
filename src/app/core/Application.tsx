@@ -44,13 +44,13 @@ const renderCore = (): void => {
     const root = ReactDOM.createRoot(rootElem);
     root.render(
         <React.StrictMode>
-            <Core />
+            <Core/>
         </React.StrictMode>
     );
 };
 
 export const startApp = async (): Promise<void> => {
-    await initParticles();
     updateDarkModeFromStorage();
+    await initParticles();
     renderCore();
 };
